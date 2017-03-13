@@ -15,7 +15,12 @@ declare module 'redux-injector' {
     (key: string, reducers: any, force?: boolean): void;
   }
 
+  interface rejectReducerFn {
+    (key: string): void;
+  }
+
 	const createInjectStore: createInjectStoreFn;
   const injectReducer: injectReducerFn;
+  const rejectReducer: rejectReducerFn;
   
 }

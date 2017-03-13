@@ -1,5 +1,5 @@
 import { createStore, combineReducers } from 'redux';
-import { set, has } from 'lodash';
+import { set, has, unset } from 'lodash';
 
 let store = {};
 let combine = combineReducers;
@@ -51,5 +51,13 @@ export function injectReducer(key, reducer, force = false) {
   if (has(store.injectedReducers, key) || force) return;
 
   set(store.injectedReducers, key, reducer);
+  store.replaceReducer(combineReducersRecurse(store.injectedReducers));
+}
+
+export function rejectReducer(key) {
+  // If key doesn't exist, do nothing
+  if (!has(store.injectedReducers, key)) return;
+
+  unset(store.injectedReducers, key);
   store.replaceReducer(combineReducersRecurse(store.injectedReducers));
 }
